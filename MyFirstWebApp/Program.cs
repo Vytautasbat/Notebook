@@ -1,19 +1,21 @@
 using Microsoft.EntityFrameworkCore;
 using NotesApp.Model;
 using NotesApp.Repositories;
-using NotesApp.Service;
-using System.Text.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
-builder.Services.AddTransient<ProductService>();
 builder.Services.AddTransient<NotesRepository>();
 builder.Services.AddControllers();
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<NotesContext>(x => x.UseSqlServer(connectionString));
-
+builder.Services
+    .AddMvc()
+    .AddRazorPagesOptions(options =>
+    {
+        options.Conventions.AddPageRoute("/Notes/Index", "/");
+    });
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -32,15 +34,5 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapRazorPages();
-app.MapControllers();
-
-//app.MapGet("/products", (context) =>
-//{
-//    var products = app.Services.GetService<ProductService>().GetProducts();
-//    var json = JsonSerializer.Serialize<Product[]>(products);
-//    return context.Response.WriteAsync(json);
-//}
-//);
-
 
 app.Run();

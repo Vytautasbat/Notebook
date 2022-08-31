@@ -1,0 +1,63 @@
+html {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin-bottom: 60px;
+}
+
+.product {
+    padding-block: 1rem;
+    inline-size: 300px;
+    position: relative;
+}
+
+.maker {
+    position: absolute;
+    left: 30px;
+    top: 200px;
+    transform: rotate(-30deg);
+    opacity: 0.7;
+    color: red;
+}
+
+.product:hover {
+    box-shadow: 0px 0px 10px 10px rgba(0, 0, 0, 0.5);
+}
+
+h5 {
+    text-align: center;
+}
+
+a {
+    text-decoration: none;
+}
+
+img {
+    width: 300px;
+    padding: 0.5rem;
+    border-radius: 1rem;
+    aspect-ratio: 1;
+    cursor: pointer;
+}
+
+.description {
+    padding: 1rem;
+}
+
+.flex-box {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}

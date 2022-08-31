@@ -1,0 +1,54 @@
+﻿@page
+@model NotesApp.Pages.Notes.IndexModel
+@{
+}
+
+<br/>
+
+<div class="container row">
+    <div class="col-10">
+        <h2>Notes List</h2>
+    </div>
+    <div class="col-2">
+        <a asp-page="Create" class="btn btn-info d-block text-white">Create note</a>
+    </div>
+
+    <div class="col-12 border p-2 mt-2">
+        <form>
+            @if (Model.Notes.Count > 0)
+            {
+                <table class="table table-striped border-1">
+                    <tr class="table-secondary">
+                        <th>
+                            <label asp-for="Notes.FirstOrDefault().Title"></label>
+                        </th>
+                        <th colspan="2">
+                            <label asp-for="Notes.FirstOrDefault().Content"></label>
+                        </th>
+                    </tr>
+                    @foreach (var item in Model.Notes)
+                    {
+                        <tr>
+                            <td>
+                                @item.Title
+                            </td>
+                            <td>
+                                @item.Content
+                            </td>
+                            <td>
+                                <div class="d-flex justify-content-end">
+                                    <button class="btn btn-success btn-sm me-2">Edit</button>
+                                    <button class="btn btn-danger btn-sm">Delete</button>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </table>
+            }
+            else
+            {
+                <p>No notes available</p>
+            }
+        </form>
+    </div>
+</div>

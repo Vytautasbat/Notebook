@@ -1,37 +1,60 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using MyFirstWebApp.Pages.Notes;
 using NotesApp.Model;
+using NotesApp.Repositories;
 
 namespace NotesApp.Pages.Notes
 {
-    public class CreateModel : PageModel
+    public class CreateModel : CategorySelectModel
     {
+
+        private readonly NotesRepository _notesRepository;
         private readonly NotesContext _context;
 
         [BindProperty]
-        public Note Book { get; set; }
+        public Note Note { get; set; }
 
-        public CreateModel(NotesContext context)
+
+        public CreateModel(NotesRepository notesRepository, NotesContext context)
         {
+            _notesRepository = notesRepository;
             _context = context;
         }
 
-        public void OnGet()
+        public IActionResult OnGet()
         {
+            GenerateCategoriesDropDownList(_context);
+            return Page();
         }
 
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPost()
         {
-            if (ModelState.IsValid)
-            {
-                _context.Notes.Add(Book);
-                _context.SaveChanges();
-                return RedirectToPage("Index");
-            }
-            else
+            //if (!ModelState.IsValid)
+            //{
+            //    return Page();
+            //}
+
+            if (Note.Title == null && Note.CategoryId == 0)
             {
                 return Page();
             }
+
+            _notesRepository.CreateNote(Note);
+            return RedirectToPage("Index");
+
+
+
+   /*         var emptyNote = new Note();
+            var tryUpdate = await TryUpdateModelAsync<Note>(emptyNote, "Note", s => s.Id, s => s.CategoryId, s => s.Title, s=> s.Content);
+
+            if (tryUpdate)
+            {
+                _notesRepository.CreateNote(emptyNote);
+                return RedirectToPage("Index");
+            }
+
+            return Page();*/
         }
     }
 }

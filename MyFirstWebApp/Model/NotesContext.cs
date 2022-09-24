@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MyFirstWebApp.Model;
 
 namespace NotesApp.Model
 {
@@ -10,7 +11,7 @@ namespace NotesApp.Model
         }
         public DbSet<Note> Notes { get; set; }
 
-        public DbSet<Author> Authors { get; set; }
+        public DbSet<Category> Categories { get; set; }
 
         //    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         //    {

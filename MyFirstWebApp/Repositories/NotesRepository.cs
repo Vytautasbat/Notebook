@@ -14,7 +14,7 @@ namespace NotesApp.Repositories
 
         public List<Note> GetNotes()
         {
-            return _context.Notes.ToList();
+            return _context.Notes.Include(note => note.Category).ToList();
         }
 
         public Note GetNote(int id)

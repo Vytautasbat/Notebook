@@ -14,7 +14,7 @@
     </div>
 
     <div class="col-12 border p-2 mt-2">
-        <form>
+        <form method="post">
             @if (Model.Notes.Count > 0)
             {
                 <table class="table table-striped border-1">
@@ -25,20 +25,26 @@
                         <th colspan="2">
                             <label asp-for="Notes.FirstOrDefault().Content"></label>
                         </th>
+                                                <th colspan="2">
+                            <label asp-for="Notes.FirstOrDefault().Category.Name"></label>
+                        </th>
                     </tr>
-                    @foreach (var item in Model.Notes)
+                    @foreach (var note in Model.Notes)
                     {
                         <tr>
                             <td>
-                                @item.Title
+                                @note.Title
                             </td>
                             <td>
-                                @item.Content
+                                @note.Content
+                            </td>
+                                                        <td>
+                                @note.Category.Name;
                             </td>
                             <td>
                                 <div class="d-flex justify-content-end">
-                                    <button class="btn btn-success btn-sm me-2">Edit</button>
-                                    <button class="btn btn-danger btn-sm">Delete</button>
+                                    <a asp-page="Edit" asp-route-id="@note.Id" class="btn btn-success btn-sm me-2">Edit</a>
+                                    <button asp-page-handler="Delete" asp-route-id="@note.Id" onclick="return confirm('Are You sure you want to delete')" class="btn btn-danger btn-sm">Delete</button>
                                 </div>
                             </td>
                         </tr>
